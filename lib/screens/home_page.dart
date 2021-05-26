@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: (AssetImage(
-                          'assets/fcloading.png',
+                          'assets/1.jpeg',
                         )),
                         fit: BoxFit.fill,
                       ),
