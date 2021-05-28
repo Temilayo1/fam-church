@@ -1,5 +1,6 @@
 import 'package:fam_church/screens/home_page.dart';
 import 'package:fam_church/screens/loading_screen.dart';
+import 'package:fam_church/screens/notes/notes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       //     //  scaffoldBackgroundColor: Colors.red,
       //     // primarySwatch: Colors.white,
       //     ),
-      home: LoadingScreen(),
+      home: Notes(),
     );
   }
 }
