@@ -50,7 +50,7 @@ class _AddListState extends State<AddList> {
                 decoration: InputDecoration(
                     focusColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red),
+                      borderSide: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     filled: true,
@@ -73,9 +73,9 @@ class _AddListState extends State<AddList> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.red),
+                  border: Border.all(color: Colors.grey),
                 ),
-                height: size.height / 2.3,
+                height: size.height / 2,
                 child: TextField(
                   maxLines: 250,
 
