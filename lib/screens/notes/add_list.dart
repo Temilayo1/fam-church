@@ -1,123 +1,90 @@
 import 'package:flutter/material.dart';
 
-class AddList extends StatefulWidget {
-  @override
-  _AddListState createState() => _AddListState();
-}
+class NoteFormWidget extends StatelessWidget {
+  final bool? isImportant;
+  final int? number;
+  final String? title;
+  final String? description;
+  final ValueChanged<bool> onChangedImportant;
+  final ValueChanged<int> onChangedNumber;
+  final ValueChanged<String> onChangedTitle;
+  final ValueChanged<String> onChangedDescription;
 
-class _AddListState extends State<AddList> {
+  const NoteFormWidget({
+    Key? key,
+    this.isImportant = false,
+    this.number = 0,
+    this.title = '',
+    this.description = '',
+    required this.onChangedImportant,
+    required this.onChangedNumber,
+    required this.onChangedTitle,
+    required this.onChangedDescription,
+  }) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    String title;
-    String dateTime;
-    String desc;
-    Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(20)),
-        height: size.height / 1.19,
-        child: Column(
-          children: [
-            Text(
-              "Add a Note",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.left,
-            ),
-            SizedBox(height: 30),
-            Text(
-              'Note Title',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: TextField(
-                maxLines: 1,
-                maxLength: 25,
-                style: TextStyle(fontSize: 18),
-                onChanged: (value) {
-                  title = value;
-                },
-                decoration: InputDecoration(
-                    focusColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5),
+  Widget build(BuildContext context) => SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Switch(
+                    value: isImportant ?? false,
+                    onChanged: onChangedImportant,
+                  ),
+                  Expanded(
+                    child: Slider(
+                      value: (number ?? 0).toDouble(),
+                      min: 0,
+                      max: 5,
+                      divisions: 5,
+                      onChanged: (number) => onChangedNumber(number.toInt()),
                     ),
-                    filled: true,
-                    fillColor: Colors.white),
-                // autofocus: true,
-                textAlign: TextAlign.center,
+                  )
+                ],
               ),
-            ),
-            //  SizedBox(height: 5),
-            Text(
-              'Note Description',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                ),
-                height: size.height / 2,
-                child: TextField(
-                  maxLines: 250,
-
-                  //// maxLength: 30,
-                  style: TextStyle(fontSize: 18),
-                  onChanged: (value) {
-                    title = value;
-                  },
-                  decoration: InputDecoration(
-                      focusColor: Colors.white,
-                      // enabledBorder: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.circular(10),
-                      // ),
-                      filled: true,
-                      fillColor: Colors.white),
-                  // autofocus: true,
-                  textAlign: TextAlign.left,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(11.0),
-              child: Container(
-                height: 65,
-                width: size.width / 1,
-                color: Colors.grey.withOpacity(0.2),
-                child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'SAVE NOTE',
-                      style: TextStyle(
-                        letterSpacing: 7,
-                        color: Colors.black,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )),
-              ),
-            ),
-          ],
+              buildTitle(),
+              SizedBox(height: 8),
+              buildDescription(),
+              SizedBox(height: 16),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
+
+  Widget buildTitle() => TextFormField(
+        maxLines: 1,
+        initialValue: title,
+        style: TextStyle(
+          color: Colors.white70,
+          fontWeight: FontWeight.bold,
+          fontSize: 24,
+        ),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: 'Title',
+          hintStyle: TextStyle(color: Colors.white70),
+        ),
+        validator: (title) =>
+            title != null && title.isEmpty ? 'The title cannot be empty' : null,
+        onChanged: onChangedTitle,
+      );
+
+  Widget buildDescription() => TextFormField(
+        maxLines: 5,
+        initialValue: description,
+        style: TextStyle(color: Colors.white60, fontSize: 18),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: 'Type something...',
+          hintStyle: TextStyle(color: Colors.white60),
+        ),
+        validator: (title) => title != null && title.isEmpty
+            ? 'The description cannot be empty'
+            : null,
+        onChanged: onChangedDescription,
+      );
 }
